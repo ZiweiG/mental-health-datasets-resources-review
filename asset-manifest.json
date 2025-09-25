@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/mental-health-datasets-resources-review/static/css/main.f855e6bc.css",
+    "main.js": "/mental-health-datasets-resources-review/static/js/main.27a6f235.js",
+    "static/js/453.45fd3b16.chunk.js": "/mental-health-datasets-resources-review/static/js/453.45fd3b16.chunk.js",
+    "index.html": "/mental-health-datasets-resources-review/index.html",
+    "main.f855e6bc.css.map": "/mental-health-datasets-resources-review/static/css/main.f855e6bc.css.map",
+    "main.27a6f235.js.map": "/mental-health-datasets-resources-review/static/js/main.27a6f235.js.map",
+    "453.45fd3b16.chunk.js.map": "/mental-health-datasets-resources-review/static/js/453.45fd3b16.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.27a6f235.js"
+  ]
+}
