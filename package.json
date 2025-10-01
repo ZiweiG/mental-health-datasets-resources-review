@@ -2,7 +2,7 @@
   "name": "mental-health-datasets-resources-review",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://tq-o.github.io/mental-health-datasets-resources-review",
+  "homepage": "https://ZiweiG.github.io/mental-health-datasets-resources-review",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.8.0",
