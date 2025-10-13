@@ -9,6 +9,9 @@ function App() {
       <Box sx={styles.headerContainer}>
         Mental Health Dataset Tracker
       </Box>
+      <Box>
+        Add description here!
+      </Box>
       <Box sx={styles.tableContainer}>
         <MainTable/>
       </Box>

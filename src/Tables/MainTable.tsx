@@ -36,16 +36,26 @@ export default function MainTable() {
     }, []);
 
   return (
-    <div>
+    <div style={{height: "90vh"}}>
       <DataGrid 
         rows={rows} 
         columns={columns} 
         showToolbar
         pagination
+        density="compact"
         initialState={{
           pagination: { paginationModel: { pageSize: 10 } },
         }}
-        pageSizeOptions={[5, 10, 25]}  // options user can select
+        pageSizeOptions={[5, 10, 25]}
+        sx={{
+          "& .MuiDataGrid-columnHeader": {
+            backgroundColor: "#CBCBCB",
+          },
+          "& .MuiDataGrid-columnHeaderTitle": {
+            fontWeight: "bold",
+          },
+        }}
+        
       />
     </div>
   );
