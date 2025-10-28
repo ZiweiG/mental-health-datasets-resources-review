@@ -3,6 +3,7 @@ import './App.css';
 import Box from '@mui/material/Box';
 import MainTable from './Tables/MainTable'
 import GoalChart from './Charts/GoalChart'
+import YearGraph from './Charts/YearGraph'
 import Papa from "papaparse";
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 
@@ -18,6 +19,11 @@ function App() {
 
   const [dataForGoalChart, setDataForGoalChart] = React.useState<any>({
     uniqueGoals: [],
+    counts: [],
+  })
+
+  const [dataForYearGraph, setDataForYearGraph] = React.useState<any>({
+    years: [],
     counts: [],
   })
 
@@ -51,6 +57,19 @@ function App() {
     setDataForGoalChart((prev: any) => ({... prev, uniqueGoals: uniqueGoals, counts: counts }))
   }
 
+  const dataForYearGraphFunc = (data: any) => {
+    const goalCounts = data.reduce((acc: any, row: any) => {
+      const goal = row["Venue Published"];
+      if (goal == null || goal === "") return acc;
+      acc[goal] = (acc[goal] || 0) + 1;
+      return acc;
+    }, {})
+    const entries = Object.entries(goalCounts);
+    const years = entries.map(([goal]) => goal);
+    const counts = entries.map(([_, count]) => count);
+    setDataForYearGraph((prev: any) => ({... prev, years: years, counts: counts }))
+  }
+
   React.useEffect(() => {
     fetch(`${process.env.PUBLIC_URL}/data/dataset1.csv`) // CSV in public/data/fakeData.csv
       .then((res) => res.text())
@@ -66,6 +85,7 @@ function App() {
             if (data.length > 0) {
               dataTableFunc(data)
               dataForGoalChartFunc(data)
+              dataForYearGraphFunc(data)
             }
           },
         });
@@ -86,6 +106,9 @@ function App() {
       </Box>
       <Box>
         <GoalChart x={dataForGoalChart.uniqueGoals} y={dataForGoalChart.counts}/>
+      </Box>
+      <Box>
+        <YearGraph x={dataForYearGraph.years} y={dataForYearGraph.counts}/>
       </Box>
     </Box>
   );

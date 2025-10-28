@@ -2,7 +2,6 @@ import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { chartsTooltipClasses } from '@mui/x-charts/ChartsTooltip';
 
 export default function GoalChart({x, y}: any) {
   return (
