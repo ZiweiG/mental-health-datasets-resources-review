@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import { getChipColor, parseDisorders } from './utils/utils';
 import MainTable from './Tables/MainTable'
 import GoalChart from './Charts/GoalChart'
 import YearGraph from './Charts/YearGraph'
@@ -28,11 +30,49 @@ function App() {
   })
 
   const dataTableFunc = (data: any) => { 
-    const cols: GridColDef[] = Object.keys(data[0]).map((key) => ({
-      field: key,
-      headerName: key,
-      width: 200,
-    }));
+    const cols: GridColDef[] = Object.keys(data[0])
+    .filter((key) => !["Cited by", "Turn of Spans"].includes(key))
+    .map((key) => {
+      // Special rendering for "Mental Disorder Type"
+      if (key === "Mental Disorder Type") {
+        return {
+          field: key,
+          headerName: key,
+          width: 300,
+          renderCell: (params: any) => {
+            const chips = parseDisorders(params.value).map((d) => (
+              <Chip
+                key={d}
+                label={d}
+                color={getChipColor(d) as any}
+                size="small"
+                style={{ marginRight: 4 }}
+              />
+            ));
+            
+            return (
+              <div 
+                style={{ 
+                  display: 'flex', 
+                  overflowX: 'auto', 
+                  whiteSpace: 'nowrap', 
+                  width: '100%' 
+                }}
+              >
+                {chips}
+              </div>
+            );
+          },
+        };
+      }
+
+      return {
+        field: key,
+        headerName: key,
+        width: 200,
+      };
+    });
+       
     setDataTable((prev) => ({
       ...prev,
       cols: cols,
@@ -46,20 +86,31 @@ function App() {
   }
 
   const dataForGoalChartFunc = (data: any) => {
-    const goalCounts = data.reduce((acc: any, row: any) => {
-      const goal = row.Goal;
-      acc[goal] = (acc[goal] || 0) + 1;
-      return acc;
-    }, {})
+    const goalCounts: Record<string, number> = {};
+
+    data.forEach((row: any) => {
+      const disorders = parseDisorders(row["Mental Disorder Type"] || "");
+      
+      disorders.forEach((d) => {
+        goalCounts[d] = (goalCounts[d] || 0) + 1;
+      });
+    });
+
     const entries = Object.entries(goalCounts);
     const uniqueGoals = entries.map(([goal]) => goal);
     const counts = entries.map(([_, count]) => count);
-    setDataForGoalChart((prev: any) => ({... prev, uniqueGoals: uniqueGoals, counts: counts }))
-  }
+
+    setDataForGoalChart((prev: any) => ({
+      ...prev,
+      uniqueGoals,
+      counts,
+    }));
+  };
+
 
   const dataForYearGraphFunc = (data: any) => {
     const goalCounts = data.reduce((acc: any, row: any) => {
-      const goal = row["Venue Published"];
+      const goal = row["Year Published"];
       if (goal == null || goal === "") return acc;
       acc[goal] = (acc[goal] || 0) + 1;
       return acc;
@@ -71,7 +122,7 @@ function App() {
   }
 
   React.useEffect(() => {
-    fetch(`${process.env.PUBLIC_URL}/data/dataset1.csv`) // CSV in public/data/fakeData.csv
+    fetch(`${process.env.PUBLIC_URL}/data/final.csv`) // CSV in public/data/fakeData.csv
       .then((res) => res.text())
       .then((csvText) => {
         Papa.parse(csvText, {
