@@ -8,6 +8,7 @@ import GoalChart from './Charts/GoalChart'
 import YearGraph from './Charts/YearGraph'
 import Papa from "papaparse";
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import DisorderCountChart from './Charts/DisorderCountChart';
 
 function App() {
 
@@ -26,6 +27,11 @@ function App() {
 
   const [dataForYearGraph, setDataForYearGraph] = React.useState<any>({
     years: [],
+    counts: [],
+  })
+
+  const [dataForDisorderCountChart, setDataForDisorderCountChart] = React.useState<any>({
+    labels: [],
     counts: [],
   })
 
@@ -107,6 +113,33 @@ function App() {
     }));
   };
 
+  const dataForDisorderCountChartFunc = (data: any) => {
+    const countBuckets: Record<number, number> = {};
+
+    data.forEach((row: any) => {
+      const disorders = parseDisorders(row["Mental Disorder Type"] || "");
+      const n = disorders.length;
+
+      if (n > 0) {
+        countBuckets[n] = (countBuckets[n] || 0) + 1;
+      }
+    });
+
+    // Sort keys numerically
+    const sortedCounts = Object.keys(countBuckets)
+      .map((k) => parseInt(k))
+      .sort((a, b) => a - b);
+
+    const labels = sortedCounts.map((n) => `${n}`);
+    const counts = sortedCounts.map((n) => countBuckets[n]);
+
+    setDataForDisorderCountChart((prev: any) => ({
+      ...prev,
+      labels,
+      counts,
+    }));
+  };
+
 
   const dataForYearGraphFunc = (data: any) => {
     const goalCounts = data.reduce((acc: any, row: any) => {
@@ -137,6 +170,7 @@ function App() {
               dataTableFunc(data)
               dataForGoalChartFunc(data)
               dataForYearGraphFunc(data)
+              dataForDisorderCountChartFunc(data)
             }
           },
         });
@@ -157,6 +191,9 @@ function App() {
       </Box>
       <Box>
         <GoalChart x={dataForGoalChart.uniqueGoals} y={dataForGoalChart.counts}/>
+      </Box>
+      <Box>
+        <DisorderCountChart x={dataForDisorderCountChart.labels} y={dataForDisorderCountChart.counts}/>
       </Box>
       <Box>
         <YearGraph x={dataForYearGraph.years} y={dataForYearGraph.counts}/>
