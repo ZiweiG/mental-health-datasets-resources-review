@@ -36,10 +36,16 @@ function App() {
   })
 
   const dataTableFunc = (data: any) => { 
-    const cols: GridColDef[] = Object.keys(data[0])
-    .filter((key) => !["Cited by", "Turn of Spans"].includes(key))
-    .map((key) => {
-      // Special rendering for "Mental Disorder Type"
+    let keys = Object.keys(data[0])
+      .filter((key) => !["Cited by", "Turn of Spans"].includes(key));
+
+    // Insert Disorders Count column after Mental Disorder Type
+    const disorderTypeIdx = keys.indexOf("Mental Disorder Type");
+    if (disorderTypeIdx !== -1) {
+      keys.splice(disorderTypeIdx + 1, 0, "Disorders Count");
+    }
+
+    const cols: GridColDef[] = keys.map((key) => {
       if (key === "Mental Disorder Type") {
         return {
           field: key,
@@ -55,7 +61,6 @@ function App() {
                 style={{ marginRight: 4 }}
               />
             ));
-            
             return (
               <div 
                 style={{ 
@@ -71,20 +76,31 @@ function App() {
           },
         };
       }
-
+      if (key === "Disorders Count") {
+        return {
+          field: key,
+          headerName: key,
+          width: 150,
+          type: 'number',
+        };
+      }
       return {
         field: key,
         headerName: key,
         width: 200,
       };
     });
-       
+
     setDataTable((prev) => ({
       ...prev,
       cols: cols,
     }));
 
-    const rowsWithId: GridRowsProp[] = data.map((row: any, index: any) => ({ id: index + 1, ...row }));
+    // Add Disorders Count to each row
+    const rowsWithId: GridRowsProp[] = data.map((row: any, index: any) => {
+      const disorderCount = parseDisorders(row["Mental Disorder Type"] || "").length;
+      return { id: index + 1, ...row, "Disorders Count": disorderCount };
+    });
     setDataTable((prev) => ({
       ...prev,
       rows: rowsWithId,
@@ -130,7 +146,7 @@ function App() {
       .map((k) => parseInt(k))
       .sort((a, b) => a - b);
 
-    const labels = sortedCounts.map((n) => `${n}`);
+    const labels = sortedCounts.map((n) => `${n} Disorder${n > 1 ? "s" : ""}`);
     const counts = sortedCounts.map((n) => countBuckets[n]);
 
     setDataForDisorderCountChart((prev: any) => ({

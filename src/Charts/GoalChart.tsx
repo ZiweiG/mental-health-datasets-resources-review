@@ -103,7 +103,7 @@ export default function GoalChart({ x, y }: any) {
       </Box>
 
       <Typography
-        variant="body2"
+        variant="body1"
         align="center"
         color="textSecondary"
         gutterBottom

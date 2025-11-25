@@ -24,9 +24,9 @@ export default function YearGraph({x, y}: any){
             ]}
             height={300}
         />
-        <Typography variant="body2" align="center" color="textSecondary" gutterBottom>
-        This graph shows the number of papers associated with each year.
-      </Typography>
+        <Typography variant="body1" align="center" color="textSecondary" gutterBottom>
+            This graph shows the number of papers associated with each year.
+        </Typography>
       </Box>
     )
 }

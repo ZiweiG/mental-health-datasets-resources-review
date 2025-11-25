@@ -103,13 +103,17 @@ export default function DisorderCountChart({ x, y }: any) {
       </Box> */}
 
       <Typography
-        variant="body2"
+        variant="body1"
         align="center"
         color="textSecondary"
         gutterBottom
         sx={{ mt: 2 }}
       >
-        This chart shows the number of papers associated with each disorder count included.
+        This chart displays the number of papers grouped by how many disorders they include.
+        <br/>
+        <Typography variant="body2" align="center" color="textSecondary" gutterBottom>
+          For example, a count of "2" indicates the number of papers that address exactly two different mental health disorders.
+        </Typography>
       </Typography>
     </Box>
   );
