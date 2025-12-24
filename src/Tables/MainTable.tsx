@@ -9,7 +9,8 @@ type MainTableProps = {
 
 export default function MainTable({rows, columns }: MainTableProps) {
   return (
-    <div style={{height: "90vh"}}>
+    // <div style={{height: "90vh"}}>
+    <div>
       <DataGrid 
         rows={rows} 
         columns={columns} 

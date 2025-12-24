@@ -9,6 +9,7 @@ import YearGraph from './Charts/YearGraph'
 import Papa from "papaparse";
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import DisorderCountChart from './Charts/DisorderCountChart';
+import { Typography } from '@mui/material';
 
 function App() {
 
@@ -201,7 +202,7 @@ function App() {
   return (
     <Box sx={styles.appContainer}>
       <Box sx={styles.headerContainer}>
-        Mental Health Dataset Tracker
+        <Typography variant="h4">Mental Health Dataset Tracker</Typography>
       </Box>
       <Box>
         Add description here!
@@ -209,13 +210,13 @@ function App() {
       <Box sx={styles.tableContainer}>
         <MainTable rows={dataTable.rows} columns={dataTable.cols}/>
       </Box>
-      <Box>
+      <Box sx={styles.graphContainer}>
         <GoalChart x={dataForGoalChart.uniqueGoals} y={dataForGoalChart.counts}/>
       </Box>
-      <Box>
+      <Box sx={styles.graphContainer}>
         <DisorderCountChart x={dataForDisorderCountChart.labels} y={dataForDisorderCountChart.counts}/>
       </Box>
-      <Box>
+      <Box sx={styles.graphContainer}>
         <YearGraph x={dataForYearGraph.years} y={dataForYearGraph.counts}/>
       </Box>
     </Box>
@@ -226,6 +227,7 @@ interface StyleTypes {
   appContainer: React.CSSProperties;
   headerContainer: React.CSSProperties;
   tableContainer: React.CSSProperties;
+  graphContainer: React.CSSProperties;
 }
 
 const styles: StyleTypes ={
@@ -233,12 +235,20 @@ const styles: StyleTypes ={
     flexDirection: 'column', 
     justifyContent: 'center', 
     textAlign: "center",
+    backgroundColor: '#f5f5f5',
+    minHeight: '100vh',
+    padding: '18px',
   },
   headerContainer: {
     margin: "15px",
   },
   tableContainer: {
     margin: "15px",
-  }
+  },
+  graphContainer: {
+    margin: "15px",
+    border: '1px solid #fff',
+    backgroundColor: '#fff',   
+  }  
 }
 export default App;

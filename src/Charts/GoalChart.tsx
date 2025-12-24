@@ -51,7 +51,7 @@ export default function GoalChart({ x, y }: any) {
     <Box>
 
       {/* Sorting Controls */}
-      <FormControl size="small" sx={{ display: "flex", flexDirection: "row", gap: 2, ml:2 , mb: 2 }}>
+      <FormControl size="small" sx={{ display: "flex", flexDirection: "row", gap: 2, ml:2 , mb: 2, mt: 2 }}>
         <Select size="small" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           <MenuItem value="count">Sort by Count</MenuItem>
           <MenuItem value="name">Sort by Name</MenuItem>
