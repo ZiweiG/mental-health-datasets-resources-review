@@ -56,9 +56,13 @@ function App() {
               <Chip
                 key={d}
                 label={d}
-                color={getChipColor(d) as any}
                 size="small"
-                style={{ marginRight: 4 }}
+                sx={{
+                  backgroundColor: getChipColor(d),
+                  color: "#fff",
+                  marginRight: 0.5,
+                  fontWeight: 500,
+                }}
               />
             ));
             return (
