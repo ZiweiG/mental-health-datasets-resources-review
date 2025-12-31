@@ -39,7 +39,7 @@ function App() {
 
   const dataTableFunc = (data: any) => { 
     let keys = Object.keys(data[0])
-      .filter((key) => !["Cited by", "Turn of Spans"].includes(key));
+      .filter((key) => !["Cited by", "Turn of Spans", "from_sheet", "Evaluation Metrics And Method", "Benchmark"].includes(key));
 
     // Insert Disorders Count column after Mental Disorder Type
     const disorderTypeIdx = keys.indexOf("Mental Disorder Type");

@@ -32,20 +32,49 @@ export default function Description() {
 
         <ul style={styles.list}>
         <li>
-            <strong>Disorder Type:</strong> From depression and anxiety to bipolar disorder
+            <strong>Dataset:</strong> Name of the dataset or resource.
+        </li>
+        <li>
+            <strong>Mental Disorder Type:</strong> From depression and anxiety to bipolar disorder
             and beyond.
+        </li>
+        <li>
+            <strong>Disorder Count:</strong> Number of disorders represented in the dataset.
+        </li>
+        <li>
+            <strong>Goal:</strong> Intended use of the dataset/project, such as screening, early detection, symptom monitoring, severity estimation, relapse prediction, or diagnostic support.
         </li>
         <li>
             <strong>Modality:</strong> Text, speech, and multimodal signal processing.
         </li>
         <li>
-            <strong>Task Formulation:</strong> Screening, symptom monitoring, and diagnostic
-            support.
+            <strong>Year Published:</strong> Year the dataset or its primary describing paper was released.
         </li>
         <li>
+            <strong>Venue Published:</strong> Conference, journal, workshop, or repository where the dataset was introduced or documented.
+        </li>
+        <li>
+            <strong># Datasets Included:</strong> Number of individual datasets or combined within the resource
+        </li>
+        <li>
+            <strong>Size:</strong> Scale of the dataset (e.g., number of participants, samples, conversations, posts, or recordings).
+        </li>
+        <li>
+            <strong>Public? (put link if possible):</strong> Availability status of the dataset (public, restricted, or private), including access links when publicly available.
+        </li>
+        <li>
+            <strong>Data Type:</strong> Nature of the raw data (e.g., clinical interviews, self-reports, social media posts, conversational transcripts, sensor readings)
+        </li>
+        <li>
+            <strong>Professional Verification:</strong> Whether labels or annotations were validated by clinicians, mental health professionals, standardized diagnostic tools, or self-reports only.
+        </li>
+        <li>
+            <strong>Paper Link:</strong> Link to the original publication or dataset description paper.
+        </li>
+        {/* <li>
             <strong>Additional Attributes:</strong> Population demographics, annotation
             schemes, data availability, and evaluation settings.
-        </li>
+        </li> */}
         </ul>
 
         <p style={styles.paragraph}>
@@ -65,12 +94,12 @@ export default function Description() {
             construction and disorder representation over the last decade.
         </li>
         <li>
-            <strong>Gap Analysis:</strong> Identify under-represented populations and
-            disorders, with detailed discussion in our{" "}
+            <strong>Gap Analysis:</strong> Gain insights into what populations and disorders are under-represented in current research
+            (<em>with full discussion in our{" "}
             <a href="#" style={styles.link}>
             paper
             </a>
-            .
+            </em>).
         </li>
         </ul>
 
@@ -93,7 +122,7 @@ const styles: {
   link: React.CSSProperties;
 } = {
   container: {
-    maxWidth: "1200px",
+    maxWidth: "1100px",
     margin: "0 auto",
     padding: "1rem",
     // fontFamily: "system-ui, -apple-system, sans-serif",
