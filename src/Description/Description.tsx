@@ -24,8 +24,9 @@ export default function Description() {
         </p>
 
         <p style={styles.paragraph}>
-        This website serves as the interactive companion to our paper,
-        <em> [Insert Paper Title]</em>. Unlike previous surveys that focus on specific
+        This website serves as the interactive companion to our paper
+        {/* ,<em> [Insert Paper Title]</em> */}
+        . Unlike previous surveys that focus on specific
         tasks or single modalities, this resource offers a holistic view of
         268 datasets, <strong>categorized by:</strong>
         </p>
