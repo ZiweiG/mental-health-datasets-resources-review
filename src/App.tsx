@@ -9,6 +9,7 @@ import YearGraph from './Charts/YearGraph'
 import Papa from "papaparse";
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import DisorderCountChart from './Charts/DisorderCountChart';
+import Description from './Description/Description';
 import { Typography } from '@mui/material';
 
 function App() {
@@ -47,6 +48,33 @@ function App() {
     }
 
     const cols: GridColDef[] = keys.map((key) => {
+      // Render any column whose name contains "link" or "url" as an anchor when possible
+      if (/link|url/i.test(key)) {
+        return {
+          field: key,
+          headerName: key,
+          width: 220,
+          renderCell: (params: any) => {
+            const val = params.value;
+            if (val == null || val === "") return null;
+            const text = String(val).trim();
+            // rudimentary URL check: absolute http(s) or common domain pattern
+            const isAbsolute = /^https?:\/\//i.test(text);
+            const looksLikeDomain = /^[\w.-]+\.(com|org|edu|net|io|gov|mil)(\/|$)/i.test(text);
+            if (isAbsolute || looksLikeDomain) {
+              const href = isAbsolute ? text : `https://${text}`;
+              return (
+                <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'underline' }}>
+                  {text}
+                </a>
+              );
+            }
+
+            return <span>{text}</span>;
+          },
+        };
+      }
+
       if (key === "Mental Disorder Type") {
         return {
           field: key,
@@ -201,11 +229,11 @@ function App() {
 
   return (
     <Box sx={styles.appContainer}>
-      <Box sx={styles.headerContainer}>
+      {/* <Box sx={styles.headerContainer}>
         <Typography variant="h4">Mental Health Dataset Tracker</Typography>
-      </Box>
+      </Box> */}
       <Box>
-        Add description here!
+        <Description />
       </Box>
       <Box sx={styles.tableContainer}>
         <MainTable rows={dataTable.rows} columns={dataTable.cols}/>

@@ -3,10 +3,22 @@ export function parseDisorders(raw: string) {
 
   const lower = raw.toLowerCase();
 
-  const parts = lower
-    .split(/\.|and|,/g)
+  // Find all parenthesis groups and replace with placeholders
+  const parenGroups: string[] = [];
+  let replaced = lower.replace(/\([^()]*\)/g, (match) => {
+    parenGroups.push(match);
+    return `__PAREN_${parenGroups.length - 1}__`;
+  });
+
+  // Split on delimiters outside parentheses
+  let parts = replaced
+    .split(/\.|and|,|;/g)
     .map(s => s.trim())
-    .filter(s => s.length > 0);
+    .filter(s => s.length > 0)
+    .map(s => {
+      // Restore parenthesis content
+      return s.replace(/__PAREN_(\d+)__/g, (_, idx) => parenGroups[Number(idx)] || '');
+    });
 
   return [...new Set(parts)];
 }
